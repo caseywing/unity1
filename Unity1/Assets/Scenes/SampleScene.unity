@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 870147720}
   - component: {fileID: 870147722}
   m_Layer: 0
-  m_Name: Square
+  m_Name: player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
