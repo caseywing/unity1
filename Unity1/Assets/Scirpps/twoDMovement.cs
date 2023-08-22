@@ -23,6 +23,11 @@ public class twoDMovement : MonoBehaviour
     const string player_down = "swimmingdown";
     const string player_right = "swimmingright";
     const string player_left = "swimmingleft";
+    const string player_downleft = "swimmingdownleft";
+    const string player_downright = "swimmingdownright";
+    const string player_upleft = "swimmingupleft";
+    const string player_upright = "swimmingupright";
+
 
 
     void Start()
@@ -71,6 +76,8 @@ public class twoDMovement : MonoBehaviour
             {
                 ChangeAnimationState(player_down);
             }
+
+
 
 
         }
