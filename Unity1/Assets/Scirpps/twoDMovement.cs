@@ -33,7 +33,8 @@ public class twoDMovement : MonoBehaviour
     }
     void Update()
     {
-
+        border.transform.position = border.transform.position = new Vector3(border.transform.position.x, gameObject.transform.position.y);
+        //border.transform.position=new vector3(1, 1);
         inputHorizontal = Input.GetAxisRaw("Horizontal");
         inputVertical = Input.GetAxisRaw("Vertical");
 
@@ -52,6 +53,7 @@ public class twoDMovement : MonoBehaviour
                 inputVertical *= speedLimiter;
             }
             playerRB.velocity = new Vector2(inputHorizontal * walkSpeed, inputVertical * walkSpeed);
+            
 
             if (inputHorizontal > 0)
             {
