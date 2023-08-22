@@ -6,6 +6,7 @@ public class twoDMovement : MonoBehaviour
 {
     [SerializeField] Rigidbody2D playerRB;
     [SerializeField] int movementSpeed;
+    [SerializeField] GameObject border;
 
     private Vector2 movementInput;
     private BoxCollider2D myBoxCollider2D;
