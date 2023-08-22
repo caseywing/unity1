@@ -13,7 +13,7 @@ TagManager:
   - UI
   - Shaks
   - player
-  - 
+  - pickups
   - 
   - 
   - 
@@ -49,4 +49,7 @@ TagManager:
     locked: 0
   - name: player
     uniqueID: 3315187749
+    locked: 0
+  - name: Pickups
+    uniqueID: 200004757
     locked: 0

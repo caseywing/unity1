@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync(2);
+        SceneManager.LoadSceneAsync(3);
     }
     public void Options()
     {
@@ -20,5 +20,9 @@ public class MainMenu : MonoBehaviour
     public void Back()
     {
         SceneManager.LoadSceneAsync(0);
+    }
+    public void tutorial()
+    {
+        SceneManager.LoadSceneAsync(2);
     }
 }
