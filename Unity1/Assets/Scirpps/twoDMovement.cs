@@ -4,40 +4,91 @@ using UnityEngine;
 
 public class twoDMovement : MonoBehaviour
 {
-    [SerializeField] Rigidbody2D playerRB;
-    [SerializeField] int movementSpeed;
+    Rigidbody2D playerRB;
 
-    private Vector2 movementInput;
     private BoxCollider2D myBoxCollider2D;
+
+    float walkSpeed = 10f;
+    float speedLimiter = 0.7f;
+    float inputHorizontal;
+    float inputVertical;
+
+    Animator animator;
+
+    string currentState;
+    const string player_IDLE = "idling1";
+    const string player_up = "swimmingup";
+    const string player_down = "swimmingdown";
+    const string player_right = "swimmingright";
+    const string player_left = "swimmingleft";
+
 
     void Start()
     {
         myBoxCollider2D = GetComponent<BoxCollider2D>();
-        playerRB = GetComponent<Rigidbody2D>();
+        playerRB = gameObject.GetComponent<Rigidbody2D>();
+        animator = gameObject.GetComponent<Animator>();
     }
-
     void Update()
     {
-        movement();
+
+        inputHorizontal = Input.GetAxisRaw("Horizontal");
+        inputVertical = Input.GetAxisRaw("Vertical");
 
         if (myBoxCollider2D.IsTouchingLayers(LayerMask.GetMask("Shaks")))
         {
             PLayerHit();
-            Debug.Log("hit");
+        }
+    }
+    void FixedUpdate()
+    {
+        if (inputHorizontal != 0 || inputVertical != 0)
+        {
+            if (inputHorizontal != 0 && inputVertical != 0)
+            {
+                inputHorizontal *= speedLimiter;
+                inputVertical *= speedLimiter;
+            }
+            playerRB.velocity = new Vector2(inputHorizontal * walkSpeed, inputVertical * walkSpeed);
 
+            if (inputHorizontal > 0)
+            {
+                ChangeAnimationState(player_right);
+            }
+            else if (inputHorizontal < 0)
+            {
+                ChangeAnimationState(player_left);
+            }
+            else if (inputVertical > 0)
+            {
+                ChangeAnimationState(player_up);
+            }
+            else if (inputVertical < 0)
+            {
+                ChangeAnimationState(player_down);
+            }
+
+
+        }
+        else
+        {
+            playerRB.velocity = new Vector2(0f, 0f);
+            ChangeAnimationState(player_IDLE);
         }
     }
     public void PLayerHit()
     {
         FindObjectOfType<GameSession>().TakeLive();
     }
-    private void movement()
+    void ChangeAnimationState(string newState)
     {
-        movementInput.x = Input.GetAxisRaw("Horizontal");
-        movementInput.y = Input.GetAxisRaw("Vertical");
+        if (currentState == newState)
+        {
+            return;
+        }
 
-        movementInput.Normalize();
+        animator.Play(newState);
 
-        playerRB.velocity = movementInput * movementSpeed;
+        currentState = newState;
     }
 }
