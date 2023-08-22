@@ -11,8 +11,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Shaks
+  - player
   - 
   - 
   - 
@@ -40,4 +40,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackGorund
+    uniqueID: 2759927401
+    locked: 0
+  - name: Sharks
+    uniqueID: 2181702083
+    locked: 0
+  - name: player
+    uniqueID: 3315187749
     locked: 0
