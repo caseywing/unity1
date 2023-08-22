@@ -6,6 +6,9 @@ public class GameSession : MonoBehaviour
 {
 
     [SerializeField] int playerLives = 3;
+    [SerializeField] float HowLongYouCanTouch = 0f;
+    private float TouchCounter = 0f;
+
 
     private void Awake()
     {
@@ -20,14 +23,13 @@ public class GameSession : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-
+    private void Update()
+    {
+        ProcessPlayerDeath();
+    }
     public void ProcessPlayerDeath()
     {
-        if (playerLives > 1)
-        {
-            TakeLive();
-        }
-        else
+        if (playerLives <= 0)
         {
             RestGame();
         }
@@ -38,8 +40,17 @@ public class GameSession : MonoBehaviour
         Debug.Log("the game has reset");
     }
 
-    private void TakeLive()
+    public void TakeLive()
     {
-        playerLives--;
+        TouchCounter -= Time.deltaTime;
+        if (TouchCounter <= 0)
+        {
+            playerLives--;
+
+            TouchCounter = HowLongYouCanTouch;
+        }
+
+        
+        Debug.Log(playerLives);
     }
 }

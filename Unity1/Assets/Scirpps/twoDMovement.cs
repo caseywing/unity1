@@ -23,11 +23,13 @@ public class twoDMovement : MonoBehaviour
         if (myBoxCollider2D.IsTouchingLayers(LayerMask.GetMask("Shaks")))
         {
             PLayerHit();
+            Debug.Log("hit");
+
         }
     }
     public void PLayerHit()
     {
-        FindObjectOfType<GameSession>().ProcessPlayerDeath();
+        FindObjectOfType<GameSession>().TakeLive();
     }
     private void movement()
     {
