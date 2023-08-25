@@ -14,7 +14,7 @@ TagManager:
   - Shaks
   - player
   - pickups
-  - 
+  - Rock
   - 
   - 
   - 
@@ -52,4 +52,7 @@ TagManager:
     locked: 0
   - name: Pickups
     uniqueID: 200004757
+    locked: 0
+  - name: Rock
+    uniqueID: 3307990893
     locked: 0
