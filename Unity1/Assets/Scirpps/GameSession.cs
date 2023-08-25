@@ -8,8 +8,10 @@ public class GameSession : MonoBehaviour
 {
 
     [SerializeField] int playerLives = 3, score = 0;
-    [SerializeField] float HowLongYouCanTouch = 0f;
+    [SerializeField] float immortality = 0f;
     [SerializeField] Text scoreText, livesText;
+    public bool imortal = false;
+    public bool keepTouching = false;
     private float TouchCounter = 0f;
 
 
@@ -30,7 +32,7 @@ public class GameSession : MonoBehaviour
     {
         livesText.text = playerLives.ToString();
         scoreText.text = score.ToString();
-    }
+        }
     public void AddToScore(int value)
     {
         score += value;
@@ -39,6 +41,13 @@ public class GameSession : MonoBehaviour
     private void Update()
     {
         ProcessPlayerDeath();
+        stopingTouchcounter();
+        Debug.Log(TouchCounter);
+        if(keepTouching)
+        {
+            StartCoroutine(BeingImortal());
+        }
+
     }
     public void ProcessPlayerDeath()
     {
@@ -60,18 +69,44 @@ public class GameSession : MonoBehaviour
     }
     public void TakeLive()
     {
-        TouchCounter -= Time.deltaTime;
         if (TouchCounter <= 0)
         {
             playerLives--;
 
             livesText.text = playerLives.ToString();
 
-            TouchCounter = HowLongYouCanTouch;
+            TouchCounter = immortality;
+        }
+    }
+    private void stopingTouchcounter()
+    {   
+        if (TouchCounter <= 0)
+        {
+            TouchCounter = 0;
+        }
+        else
+        {   
+            TouchCounter -= Time.deltaTime;
         }
 
+    }
+    IEnumerator BeingImortal()
+    {
+      
+        imortal = true;
+
+        if (keepTouching)
+        {   
+            yield return new WaitForSeconds(TouchCounter);
+
+            imortal = false;
+        }
         
 
+
+        
+        
+        
     }
 
 }

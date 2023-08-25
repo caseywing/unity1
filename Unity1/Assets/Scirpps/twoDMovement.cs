@@ -6,9 +6,13 @@ public class twoDMovement : MonoBehaviour
 {
     [SerializeField] int movementSpeed;
     [SerializeField] GameObject border;
+    [SerializeField] float timeOnOff;
+    [SerializeField] bool OnOff = true;
+    [SerializeField] bool TurnOn;
 
     Rigidbody2D playerRB;
     private BoxCollider2D myBoxCollider2D;
+    private float shotCounter;
 
     float walkSpeed = 10f;
     float speedLimiter = 0.7f;
@@ -23,11 +27,7 @@ public class twoDMovement : MonoBehaviour
     const string player_down = "swimmingdown";
     const string player_right = "swimmingright";
     const string player_left = "swimmingleft";
-    const string player_downleft = "swimmingdownleft";
-    const string player_downright = "swimmingdownright";
-    const string player_upleft = "swimmingupleft";
-    const string player_upright = "swimmingupright";
-
+    const string player_hit = "Immortal";
 
 
     void Start()
@@ -35,21 +35,33 @@ public class twoDMovement : MonoBehaviour
         myBoxCollider2D = GetComponent<BoxCollider2D>();
         playerRB = gameObject.GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
+
+        TurnOn = true;
+        StartCoroutine(On());
     }
     void Update()
     {
+        OnOff = GameObject.Find("Game Session").GetComponent<GameSession>().imortal;
+        gameObject.GetComponent<SpriteRenderer>().enabled = TurnOn;
         border.transform.position = border.transform.position = new Vector3(border.transform.position.x, gameObject.transform.position.y);
-        //border.transform.position=new vector3(1, 1);
         inputHorizontal = Input.GetAxisRaw("Horizontal");
         inputVertical = Input.GetAxisRaw("Vertical");
 
         if (myBoxCollider2D.IsTouchingLayers(LayerMask.GetMask("Shaks")))
         {
             PLayerHit();
+            GameObject.Find("Game Session").GetComponent<GameSession>().keepTouching = true;
         }
+        else
+        {
+            GameObject.Find("Game Session").GetComponent<GameSession>().keepTouching = false;
+        }
+
+        
     }
     void FixedUpdate()
     {
+
         if (inputHorizontal != 0 || inputVertical != 0)
         {
             if (inputHorizontal != 0 && inputVertical != 0)
@@ -78,8 +90,6 @@ public class twoDMovement : MonoBehaviour
             }
 
 
-
-
         }
         else
         {
@@ -90,7 +100,9 @@ public class twoDMovement : MonoBehaviour
     public void PLayerHit()
     {
         FindObjectOfType<GameSession>().TakeLive();
+        
     }
+    
     void ChangeAnimationState(string newState)
     {
         if (currentState == newState)
@@ -101,5 +113,21 @@ public class twoDMovement : MonoBehaviour
         animator.Play(newState);
 
         currentState = newState;
+    }
+    public IEnumerator On()
+    {
+
+        while (true)
+        {
+            if (OnOff)
+            {
+                TurnOn = !TurnOn;
+            }
+            else
+            {
+                TurnOn = true;
+            }
+            yield return new WaitForSeconds(timeOnOff);
+        }
     }
 }
