@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class twoDMovement : MonoBehaviour
 {
-    [SerializeField] int movementSpeed;
+    [SerializeField] int moveSpeed;
     [SerializeField] GameObject border;
-    [SerializeField] float timeOnOff;
-    [SerializeField] bool OnOff = true;
-    [SerializeField] bool TurnOn;
+    [SerializeField] float timeOnOff = 0.14f;
+    private bool OnOff = false;
+    private bool TurnOn;
+    private bool imortal = false;
+    private bool keepTouching = false;
 
     Rigidbody2D playerRB;
     private BoxCollider2D myBoxCollider2D;
     private float shotCounter;
-
-    float walkSpeed = 10f;
-    float speedLimiter = 0.7f;
-    float inputHorizontal;
-    float inputVertical;
-
+    float horizontalInput;
+    float verticalInput;
+    
     Animator animator;
 
     string currentState;
@@ -27,7 +26,11 @@ public class twoDMovement : MonoBehaviour
     const string player_down = "swimmingdown";
     const string player_right = "swimmingright";
     const string player_left = "swimmingleft";
-    const string player_hit = "Immortal";
+    const string player_upperLeft = "swimmingupleft";
+    const string player_upperRight = "swimmingupright";
+    const string player_downLeft = "swimmingdownleft";
+    const string player_downRight = "swimmingdownright";
+
 
 
     void Start()
@@ -41,55 +44,79 @@ public class twoDMovement : MonoBehaviour
     }
     void Update()
     {
-        OnOff = GameObject.Find("Game Session").GetComponent<GameSession>().imortal;
+        OnOff = imortal;
+        
         gameObject.GetComponent<SpriteRenderer>().enabled = TurnOn;
         border.transform.position = border.transform.position = new Vector3(border.transform.position.x, gameObject.transform.position.y);
-        inputHorizontal = Input.GetAxisRaw("Horizontal");
-        inputVertical = Input.GetAxisRaw("Vertical");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
 
         if (myBoxCollider2D.IsTouchingLayers(LayerMask.GetMask("Shaks")))
         {
             PLayerHit();
-            GameObject.Find("Game Session").GetComponent<GameSession>().keepTouching = true;
+            keepTouching = true;
         }
         else
         {
-            GameObject.Find("Game Session").GetComponent<GameSession>().keepTouching = false;
+            keepTouching = false;
         }
 
-        
+        if (keepTouching)
+        {
+            StartCoroutine(BeingImortal());
+        }
+
     }
     void FixedUpdate()
     {
+        GhatGPTMovementScript();
+    }
+    private void GhatGPTMovementScript()
+    {
+        Vector2 movement = new Vector2(horizontalInput, verticalInput);
 
-        if (inputHorizontal != 0 || inputVertical != 0)
+        // Normalize the movement vector to ensure consistent speed in all directions
+        if (movement.magnitude > 1)
         {
-            if (inputHorizontal != 0 && inputVertical != 0)
-            {
-                inputHorizontal *= speedLimiter;
-                inputVertical *= speedLimiter;
-            }
-            playerRB.velocity = new Vector2(inputHorizontal * walkSpeed, inputVertical * walkSpeed);
-            
+            movement.Normalize();
+        }
 
-            if (inputHorizontal > 0)
-            {
-                ChangeAnimationState(player_right);
-            }
-            else if (inputHorizontal < 0)
-            {
-                ChangeAnimationState(player_left);
-            }
-            else if (inputVertical > 0)
-            {
-                ChangeAnimationState(player_up);
-            }
-            else if (inputVertical < 0)
-            {
-                ChangeAnimationState(player_down);
-            }
+        playerRB.velocity = movement * moveSpeed;
 
-
+        if (movement.x > 0 && movement.y == 0)
+        {
+            ChangeAnimationState(player_right);
+        }
+        else if (movement.x < 0 && movement.y == 0)
+        {
+            ChangeAnimationState(player_left);
+        }
+        else if (movement.x == 0 && movement.y > 0)
+        {
+            ChangeAnimationState(player_up);
+        }
+        else if (movement.x == 0 && movement.y < 0)
+        {
+            ChangeAnimationState(player_down);
+        }
+        else if (movement.x != 0 && movement.y != 0)
+        {
+            if (movement.x > 0 && movement.y > 0)
+            {
+                ChangeAnimationState(player_upperRight);
+            }
+            else if (movement.x < 0 && movement.y > 0)
+            {
+                ChangeAnimationState(player_upperLeft);
+            }
+            else if (movement.x > 0 && movement.y < 0)
+            {
+                ChangeAnimationState(player_downRight);
+            }
+            else if (movement.x < 0 && movement.y < 0)
+            {
+                ChangeAnimationState(player_downLeft);
+            }
         }
         else
         {
@@ -100,9 +127,9 @@ public class twoDMovement : MonoBehaviour
     public void PLayerHit()
     {
         FindObjectOfType<GameSession>().TakeLive();
-        
+
     }
-    
+
     void ChangeAnimationState(string newState)
     {
         if (currentState == newState)
@@ -130,4 +157,18 @@ public class twoDMovement : MonoBehaviour
             yield return new WaitForSeconds(timeOnOff);
         }
     }
+
+    IEnumerator BeingImortal()
+    {
+
+        imortal = true;
+
+        if (keepTouching)
+        {
+            yield return new WaitForSeconds(GameObject.Find("Game Session").GetComponent<GameSession>().TouchCounter);
+
+            imortal = false;
+        }
+    }
+
 }

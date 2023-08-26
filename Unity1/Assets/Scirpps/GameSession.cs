@@ -8,11 +8,9 @@ public class GameSession : MonoBehaviour
 {
 
     [SerializeField] int playerLives = 3, score = 0;
-    [SerializeField] float immortality = 0f;
+    [SerializeField] float immortality = 3f;
     [SerializeField] Text scoreText, livesText;
-    public bool imortal = false;
-    public bool keepTouching = false;
-    private float TouchCounter = 0f;
+    public float TouchCounter = 0f;
 
 
     private void Awake()
@@ -42,11 +40,6 @@ public class GameSession : MonoBehaviour
     {
         ProcessPlayerDeath();
         stopingTouchcounter();
-        Debug.Log(TouchCounter);
-        if(keepTouching)
-        {
-            StartCoroutine(BeingImortal());
-        }
 
     }
     public void ProcessPlayerDeath()
@@ -89,24 +82,5 @@ public class GameSession : MonoBehaviour
             TouchCounter -= Time.deltaTime;
         }
 
-    }
-    IEnumerator BeingImortal()
-    {
-      
-        imortal = true;
-
-        if (keepTouching)
-        {   
-            yield return new WaitForSeconds(TouchCounter);
-
-            imortal = false;
-        }
-        
-
-
-        
-        
-        
-    }
-
+    }        
 }
