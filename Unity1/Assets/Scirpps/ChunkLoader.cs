@@ -19,9 +19,6 @@ public class ChunkLoader : MonoBehaviour
             UnloadChunks(currentChunk);
             lastChunkLoaded = currentChunk;
         }
-
-        Debug.Log("Current Chunk: " + currentChunk);
-        Debug.Log("Loaded Chunks Count: " + loadedChunks.Count);
     }
 
     private void LoadChunks(Vector2 currentChunk)
@@ -52,7 +49,6 @@ public class ChunkLoader : MonoBehaviour
             GameObject chunkObject = loadedChunks[chunkToRemove];
             loadedChunks.Remove(chunkToRemove);
 
-            // Destroy the chunk GameObject and its children
             Destroy(chunkObject);
         }
     }

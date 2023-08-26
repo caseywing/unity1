@@ -7,12 +7,12 @@ public class twoDMovement : MonoBehaviour
     [SerializeField] int movementSpeed;
     [SerializeField] GameObject border;
     [SerializeField] float timeOnOff;
-    [SerializeField] bool OnOff = true;
-    [SerializeField] bool TurnOn;
 
     Rigidbody2D playerRB;
     private BoxCollider2D myBoxCollider2D;
     private float shotCounter;
+    private bool OnOff = true;
+    private bool TurnOn;
 
     float walkSpeed = 10f;
     float speedLimiter = 0.7f;
