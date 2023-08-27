@@ -625,17 +625,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1664039629, guid: 59a4464866791ae4281de5adf3b0d506, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 5456112285919666433, guid: 59a4464866791ae4281de5adf3b0d506, type: 3}
       propertyPath: m_Name
       value: the Sharks
-      objectReference: {fileID: 0}
-    - target: {fileID: 5456112285919666433, guid: 59a4464866791ae4281de5adf3b0d506, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5456112285919666447, guid: 59a4464866791ae4281de5adf3b0d506, type: 3}
       propertyPath: m_RootOrder
