@@ -34,7 +34,7 @@ public class GameSession : MonoBehaviour
         }
     public void AddToScore(int value)
     {
-        score += value;
+        score = value;
         scoreText.text = score.ToString();
     }
     private void Update()

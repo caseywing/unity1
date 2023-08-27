@@ -7,6 +7,7 @@ public class twoDMovement : MonoBehaviour
     [SerializeField] int moveSpeed;
     [SerializeField] GameObject border;
     [SerializeField] float timeOnOff = 0.14f;
+    [SerializeField] int howfar;
     private bool OnOff = false;
     private bool TurnOn;
     private bool imortal = false;
@@ -50,7 +51,8 @@ public class twoDMovement : MonoBehaviour
         border.transform.position = border.transform.position = new Vector3(border.transform.position.x, gameObject.transform.position.y);
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-
+        howfar = Mathf.FloorToInt((gameObject.transform.position.y * .10f) * -1f);
+        FindObjectOfType<GameSession>().AddToScore(howfar);
         if (myBoxCollider2D.IsTouchingLayers(LayerMask.GetMask("Shaks")))
         {
             PLayerHit();
