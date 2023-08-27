@@ -10,6 +10,7 @@ public class GameSession : MonoBehaviour
     [SerializeField] int playerLives = 3, score = 0;
     [SerializeField] float immortality = 3f;
     [SerializeField] Text scoreText, livesText;
+    [SerializeField] Image [] hearts;
     public float TouchCounter = 0f;
 
 
@@ -58,6 +59,14 @@ public class GameSession : MonoBehaviour
     public void AddToLives()
     {
         playerLives++;
+
+        if (playerLives >= 3)
+        {
+            playerLives = 3;
+        }
+
+        UpdateHearts();
+
         livesText.text = playerLives.ToString();
     }
     public void TakeLive()
@@ -65,12 +74,28 @@ public class GameSession : MonoBehaviour
         if (TouchCounter <= 0)
         {
             playerLives--;
-
+            UpdateHearts();
             livesText.text = playerLives.ToString();
 
             TouchCounter = immortality;
         }
     }
+
+    void UpdateHearts()
+    {
+        for (int i=0; i < hearts.Length; i++)
+        {
+            if (i < playerLives)
+            {
+                hearts[i].enabled = true;
+            }
+            else
+            {
+                hearts[i].enabled = false;
+            }
+        }
+    }
+
     private void stopingTouchcounter()
     {   
         if (TouchCounter <= 0)

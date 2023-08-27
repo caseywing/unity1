@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &315848852 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7213139599556399916, guid: c028f0ec454be4749964028a6244ebef, type: 3}
-  m_PrefabInstance: {fileID: 7213139598719956393}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &348290420
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,21 +403,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7213139599556399918, guid: c028f0ec454be4749964028a6244ebef, type: 3}
   m_PrefabInstance: {fileID: 7213139598719956393}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &870147731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 315848852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdcde272a54881b4b80d1d8c283be2cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chunkPrefab: {fileID: 8968089000655949296, guid: 281dbe4c32ed49f48b1ad7b74430c351, type: 3}
-  bufferDistance: 5
-  chunkSize: 100
 --- !u!1 &1160954003
 GameObject:
   m_ObjectHideFlags: 3
@@ -663,11 +643,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5456112285919666447, guid: 59a4464866791ae4281de5adf3b0d506, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.36
+      value: -0.21
       objectReference: {fileID: 0}
     - target: {fileID: 5456112285919666447, guid: 59a4464866791ae4281de5adf3b0d506, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.27
+      value: 10.7
       objectReference: {fileID: 0}
     - target: {fileID: 5456112285919666447, guid: 59a4464866791ae4281de5adf3b0d506, type: 3}
       propertyPath: m_LocalPosition.z
@@ -786,10 +766,6 @@ PrefabInstance:
     - target: {fileID: 3142913528459421847, guid: e124809459cff7c4382f2e8120122a14, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3142913528459422056, guid: e124809459cff7c4382f2e8120122a14, type: 3}
-      propertyPath: immortality
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3142913528459422057, guid: e124809459cff7c4382f2e8120122a14, type: 3}
       propertyPath: m_Name
